@@ -33,7 +33,7 @@ export function CharacterCard({
       <div className={cn(
         'absolute -top-2 -right-2 z-10',
         'flex items-center gap-1',
-        'opacity-0 group-hover:opacity-100',
+        'md:opacity-0 group-hover:opacity-100',
         'transition-opacity duration-200'
       )}>
         {onDuplicate && (

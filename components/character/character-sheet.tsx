@@ -382,101 +382,7 @@ export function CharacterSheet({ character, onSave, isNew = false }: CharacterSh
         </div>
       </ComicCard>
 
-      {/* Qualities and Challenges */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <ComicCard variant="surface">
-          <div className="flex items-center gap-2 mb-4">
-            <Star className="w-5 h-5 text-tertiary" />
-            <ComicHeading level={3}>Qualidades</ComicHeading>
-          </div>
-          <div className="space-y-2">
-            {editedCharacter.qualities.map((quality, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-chart-4 flex-shrink-0" />
-                <span className="flex-1">{quality}</span>
-                {isEditing && (
-                  <button
-                    type="button"
-                    onClick={() => removeQuality(index)}
-                    className="text-primary hover:text-primary/70"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
-            ))}
-            {editedCharacter.qualities.length === 0 && !isEditing && (
-              <p className="text-muted-foreground text-sm italic">Nenhuma qualidade.</p>
-            )}
-            {isEditing && (
-              <div className="flex gap-2 mt-3">
-                <input
-                  type="text"
-                  value={newQuality}
-                  onChange={(e) => setNewQuality(e.target.value)}
-                  placeholder="Nova qualidade..."
-                  className={cn(
-                    'flex-1 px-2 py-1 text-sm',
-                    'bg-input border-2 border-foreground rounded',
-                    'focus:outline-none focus:ring-2 focus:ring-chart-4'
-                  )}
-                  onKeyDown={(e) => e.key === 'Enter' && addQuality()}
-                />
-                <ComicButton variant="tertiary" size="sm" onClick={addQuality}>
-                  <Plus className="w-4 h-4" />
-                </ComicButton>
-              </div>
-            )}
-          </div>
-        </ComicCard>
-
-        <ComicCard variant="surface">
-          <div className="flex items-center gap-2 mb-4">
-            <Zap className="w-5 h-5 text-primary" />
-            <ComicHeading level={3}>Desafios</ComicHeading>
-          </div>
-          <div className="space-y-2">
-            {editedCharacter.challenges.map((challenge, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <X className="w-4 h-4 text-primary flex-shrink-0" />
-                <span className="flex-1">{challenge}</span>
-                {isEditing && (
-                  <button
-                    type="button"
-                    onClick={() => removeChallenge(index)}
-                    className="text-primary hover:text-primary/70"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
-            ))}
-            {editedCharacter.challenges.length === 0 && !isEditing && (
-              <p className="text-muted-foreground text-sm italic">Nenhum desafio.</p>
-            )}
-            {isEditing && (
-              <div className="flex gap-2 mt-3">
-                <input
-                  type="text"
-                  value={newChallenge}
-                  onChange={(e) => setNewChallenge(e.target.value)}
-                  placeholder="Novo desafio..."
-                  className={cn(
-                    'flex-1 px-2 py-1 text-sm',
-                    'bg-input border-2 border-foreground rounded',
-                    'focus:outline-none focus:ring-2 focus:ring-primary'
-                  )}
-                  onKeyDown={(e) => e.key === 'Enter' && addChallenge()}
-                />
-                <ComicButton variant="primary" size="sm" onClick={addChallenge}>
-                  <Plus className="w-4 h-4" />
-                </ComicButton>
-              </div>
-            )}
-          </div>
-        </ComicCard>
-      </div>
-
+      
       {/* Powers */}
       <ComicCard variant="surface" rotate={-1}>
         <div className="flex items-center justify-between mb-4">
@@ -641,6 +547,101 @@ export function CharacterSheet({ character, onSave, isNew = false }: CharacterSh
           )}
         </div>
       </ComicCard>
+      
+      {/* Qualities and Challenges */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <ComicCard variant="surface">
+          <div className="flex items-center gap-2 mb-4">
+            <Star className="w-5 h-5 text-tertiary" />
+            <ComicHeading level={3}>Qualidades</ComicHeading>
+          </div>
+          <div className="space-y-2">
+            {editedCharacter.qualities.map((quality, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-chart-4 flex-shrink-0" />
+                <span className="flex-1">{quality}</span>
+                {isEditing && (
+                  <button
+                    type="button"
+                    onClick={() => removeQuality(index)}
+                    className="text-primary hover:text-primary/70"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            ))}
+            {editedCharacter.qualities.length === 0 && !isEditing && (
+              <p className="text-muted-foreground text-sm italic">Nenhuma qualidade.</p>
+            )}
+            {isEditing && (
+              <div className="flex gap-2 mt-3">
+                <input
+                  type="text"
+                  value={newQuality}
+                  onChange={(e) => setNewQuality(e.target.value)}
+                  placeholder="Nova qualidade..."
+                  className={cn(
+                    'flex-1 px-2 py-1 text-sm',
+                    'bg-input border-2 border-foreground rounded',
+                    'focus:outline-none focus:ring-2 focus:ring-chart-4'
+                  )}
+                  onKeyDown={(e) => e.key === 'Enter' && addQuality()}
+                />
+                <ComicButton variant="tertiary" size="sm" onClick={addQuality}>
+                  <Plus className="w-4 h-4" />
+                </ComicButton>
+              </div>
+            )}
+          </div>
+        </ComicCard>
+
+        <ComicCard variant="surface">
+          <div className="flex items-center gap-2 mb-4">
+            <Zap className="w-5 h-5 text-primary" />
+            <ComicHeading level={3}>Desafios</ComicHeading>
+          </div>
+          <div className="space-y-2">
+            {editedCharacter.challenges.map((challenge, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <X className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="flex-1">{challenge}</span>
+                {isEditing && (
+                  <button
+                    type="button"
+                    onClick={() => removeChallenge(index)}
+                    className="text-primary hover:text-primary/70"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            ))}
+            {editedCharacter.challenges.length === 0 && !isEditing && (
+              <p className="text-muted-foreground text-sm italic">Nenhum desafio.</p>
+            )}
+            {isEditing && (
+              <div className="flex gap-2 mt-3">
+                <input
+                  type="text"
+                  value={newChallenge}
+                  onChange={(e) => setNewChallenge(e.target.value)}
+                  placeholder="Novo desafio..."
+                  className={cn(
+                    'flex-1 px-2 py-1 text-sm',
+                    'bg-input border-2 border-foreground rounded',
+                    'focus:outline-none focus:ring-2 focus:ring-primary'
+                  )}
+                  onKeyDown={(e) => e.key === 'Enter' && addChallenge()}
+                />
+                <ComicButton variant="primary" size="sm" onClick={addChallenge}>
+                  <Plus className="w-4 h-4" />
+                </ComicButton>
+              </div>
+            )}
+          </div>
+        </ComicCard>
+      </div>
 
       {/* Background */}
       <ComicCard variant="surface">

@@ -45,8 +45,8 @@ export default function HomePage() {
             <ComicHeading level={1} variant="shadow" className="mb-4">
               Icons: Assembled
             </ComicHeading>
-            <div className="absolute -right-4 -top-4 w-16 h-16 bg-tertiary rounded-full border-4 border-foreground flex items-center justify-center -rotate-12 shadow-[4px_4px_0_0_#2f2f2e]">
-              <Zap className="w-8 h-8" />
+            <div className="absolute -right-4 -top-4 w-8 h-8 bg-tertiary rounded-full border-4 border-foreground flex items-center justify-center -rotate-12 shadow-[4px_4px_0_0_#2f2f2e]">
+              <Zap className="w-4 h-4" />
             </div>
           </div>
           <p className="text-lg text-muted-foreground max-w-md mx-auto">
@@ -63,10 +63,19 @@ export default function HomePage() {
             </ComicButton>
           </Link>
           <Link href="/generator">
-            <ComicButton variant="secondary" size="lg" className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5" />
-              Gerador Aleatório
-            </ComicButton>
+            <ComicButton variant="secondary" size="lg">
+  <div className="flex flex-col items-center leading-tight">
+    <div className="flex items-center gap-2">
+      <Sparkles className="w-5 h-5 animate-pulse" />
+      Gerador Aleatório
+    </div>
+
+    <p className="text-xs opacity-70">
+      versão beta
+    </p>
+  </div>
+</ComicButton>
+            
           </Link>
         </section>
 
