@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useIsMobile } from '../../hooks/use-mobile';
 import { X, Search, Plus, Zap, Shield, Brain, Wind, Sword, Eye, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 import { Power } from '@/lib/types';
 import {
@@ -61,6 +62,9 @@ export function PowerSelector({ isOpen, onClose, onSelectPower }: PowerSelectorP
     type: 'Controle' as PowerCategory,
   });
 
+  const isMobile = useIsMobile();
+  const [showCategoriesOnMobile, setShowCategoriesOnMobile] = useState(false);
+
   const filteredPowers = useMemo(() => {
     if (searchQuery.trim()) {
       return searchPowers(searchQuery);
@@ -102,12 +106,13 @@ export function PowerSelector({ isOpen, onClose, onSelectPower }: PowerSelectorP
     setSelectedLevel(1);
     setIsCreatingCustom(false);
     setCustomPower({ name: '', description: '', type: 'Controle' });
+    setShowCategoriesOnMobile(false);
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-50 flex items-center justify-center sm:p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -118,7 +123,7 @@ export function PowerSelector({ isOpen, onClose, onSelectPower }: PowerSelectorP
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-card border-4 border-foreground comic-shadow-lg rounded-lg overflow-hidden flex flex-col">
+      <div className="relative w-full max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-4xl max-h-[90vh] my-4 sm:my-0 bg-card border-4 border-foreground comic-shadow-lg rounded-lg overflow-hidden flex flex-col">
         {/* Header */}
         <div className="bg-primary text-primary-foreground p-4 border-b-4 border-foreground">
           <div className="flex items-center justify-between">
@@ -153,7 +158,7 @@ export function PowerSelector({ isOpen, onClose, onSelectPower }: PowerSelectorP
         </div>
 
         {/* Level Selector */}
-        <div className="bg-muted p-3 border-b-2 border-foreground flex items-center gap-4">
+        <div className="bg-muted p-3 border-b-2 border-foreground flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
           <span className="font-mono text-sm font-semibold">Nivel do Poder:</span>
           <div className="flex gap-1">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((level) => (
@@ -172,7 +177,7 @@ export function PowerSelector({ isOpen, onClose, onSelectPower }: PowerSelectorP
           </div>
           <button
             onClick={() => setIsCreatingCustom(!isCreatingCustom)}
-            className={`ml-auto px-4 py-2 rounded border-2 border-foreground font-semibold text-sm transition-all flex items-center gap-2 ${
+            className={`w-full sm:w-auto mt-2 sm:mt-0 sm:ml-auto px-4 py-2 rounded border-2 border-foreground font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
               isCreatingCustom
                 ? 'bg-tertiary text-tertiary-foreground comic-shadow-sm'
                 : 'bg-card hover:bg-muted'
@@ -184,35 +189,89 @@ export function PowerSelector({ isOpen, onClose, onSelectPower }: PowerSelectorP
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-hidden flex">
-          {/* Category Sidebar */}
-          <div className="w-48 bg-muted/50 border-r-2 border-foreground overflow-y-auto">
-            <button
-              onClick={() => setSelectedCategory(null)}
-              className={`w-full p-3 text-left font-semibold border-b border-foreground/20 transition-colors ${
-                !selectedCategory && !searchQuery ? 'bg-secondary text-secondary-foreground' : 'hover:bg-muted'
-              }`}
-            >
-              Todos os Poderes
-            </button>
-            {POWER_CATEGORIES.map((category) => (
-              <button
-                key={category}
-                onClick={() => {
-                  setSelectedCategory(category);
-                  setSearchQuery('');
-                }}
-                className={`w-full p-3 text-left flex items-center gap-2 border-b border-foreground/20 transition-colors ${
-                  selectedCategory === category ? 'bg-secondary text-secondary-foreground' : 'hover:bg-muted'
-                }`}
-              >
-                <span className={`p-1 rounded ${CATEGORY_COLORS[category]} text-white`}>
-                  {CATEGORY_ICONS[category]}
-                </span>
-                <span className="font-medium">{category}</span>
-              </button>
-            ))}
-          </div>
+        <div className="flex-1 overflow-hidden flex flex-col sm:flex-row">
+          {isMobile ? (
+            <>
+              {/* Mobile Category Toggle */}
+              <div className="bg-muted p-3 border-b-2 border-foreground flex items-center justify-between sm:hidden">
+                <span className="font-mono text-sm font-semibold">Categorias:</span>
+                <button
+                  onClick={() => setShowCategoriesOnMobile(!showCategoriesOnMobile)}
+                  className="px-3 py-1 rounded border-2 border-foreground font-semibold text-sm transition-all flex items-center gap-2 bg-card hover:bg-muted"
+                >
+                  {selectedCategory || 'Todas'}
+                  {showCategoriesOnMobile ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+              </div>
+
+              {/* Mobile Category List (collapsible) */}
+              {showCategoriesOnMobile && (
+                <div className="w-[80%] h-[80vh] bg-muted/50 border-b-2 border-foreground sm:hidden overflow-y-auto">
+                  <button
+                    onClick={() => {
+                      setSelectedCategory(null);
+                      setSearchQuery('');
+                      setShowCategoriesOnMobile(false);
+                    }}
+                    className={`w-full p-3 text-left font-semibold border-b border-foreground/20 transition-colors ${
+                      !selectedCategory && !searchQuery ? 'bg-secondary text-secondary-foreground' : 'hover:bg-muted'
+                    }`}
+                  >
+                    Todos os Poderes
+                  </button>
+                  {POWER_CATEGORIES.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => {
+                        setSelectedCategory(category);
+                        setSearchQuery('');
+                        setShowCategoriesOnMobile(false);
+                      }}
+                      className={`w-full p-3 text-left flex items-center gap-2 border-b border-foreground/20 transition-colors ${
+                        selectedCategory === category ? 'bg-secondary text-secondary-foreground' : 'hover:bg-muted'
+                      }`}
+                    >
+                      <span className={`p-1 rounded ${CATEGORY_COLORS[category]} text-white`}>
+                        {CATEGORY_ICONS[category]}
+                      </span>
+                      <span className="font-medium">{category}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {/* Desktop Category Sidebar */}
+              <div className="w-48 bg-muted/50 border-r-2 border-foreground overflow-y-auto flex-shrink-0 hidden sm:block">
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className={`w-full p-3 text-left font-semibold border-b border-foreground/20 transition-colors ${
+                    !selectedCategory && !searchQuery ? 'bg-secondary text-secondary-foreground' : 'hover:bg-muted'
+                  }`}
+                >
+                  Todos os Poderes
+                </button>
+                {POWER_CATEGORIES.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      setSearchQuery('');
+                    }}
+                    className={`w-full p-3 text-left flex items-center gap-2 border-b border-foreground/20 transition-colors ${
+                      selectedCategory === category ? 'bg-secondary text-secondary-foreground' : 'hover:bg-muted'
+                    }`}
+                  >
+                    <span className={`p-1 rounded ${CATEGORY_COLORS[category]} text-white`}>
+                      {CATEGORY_ICONS[category]}
+                    </span>
+                    <span className="font-medium">{category}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
           {/* Powers List / Custom Form */}
           <div className="flex-1 overflow-y-auto p-4">
