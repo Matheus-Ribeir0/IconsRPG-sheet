@@ -69,11 +69,15 @@ export function ImageUpload({
 
         {/* Overlay buttons */}
         {editable && (
-          <div className={cn(
-            'absolute inset-0 flex items-center justify-center gap-2',
-            'bg-foreground/50 rounded-xl opacity-0 group-hover:opacity-100',
-            'transition-opacity duration-200'
-          )}>
+          <div
+  className={cn(
+    'w-24 h-24 md:w-32 md:h-32 ',
+    'absolute inset-0 flex items-center justify-center gap-2',
+    'bg-foreground/50 rounded-xl',
+    'opacity-100 md:opacity-0 md:group-hover:opacity-100',
+    'transition-opacity duration-200'
+  )}
+>
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
@@ -99,7 +103,7 @@ export function ImageUpload({
                 )}
                 aria-label="Remover imagem"
               >
-                <X className="w-5 h-5" />
+                <X className="w-2 h-5" />
               </button>
             )}
           </div>
