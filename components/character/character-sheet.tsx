@@ -3,19 +3,20 @@
 import { useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import type { Character, Power, Equipment, Attributes, Specialty, SpecialtyTier } from '@/lib/types';
-import { 
-  ORIGIN_LABELS, 
-  ATTRIBUTE_LABELS, 
-  calculateEnergy, 
-  calculateDetermination 
+import {
+  ORIGIN_LABELS,
+  ATTRIBUTE_LABELS,
+  calculateEnergy,
+  calculateDetermination
 } from '@/lib/types';
 import { ComicCard, ComicHeading, ComicButton } from '@/components/comic';
-import { AttributeCard, VitalBadge, PowerCard, SpecialtyChip, ConditionsList, ImageUpload } from '@/components/character';
-import { 
-  Shield, Zap, Star, Package, BookOpen, 
+import { AttributeCard, VitalBadge, PowerCard, SpecialtyChip, ConditionsList, ImageUpload, PointsCounter } from '@/components/character';
+import {
+  Shield, Zap, Star, Package, BookOpen,
   StickyNote, Plus, Save, X, Edit3, Check,
   AlertTriangle
 } from 'lucide-react';
+import { usePointsSystem } from '@/hooks/use-points-system';
 
 interface CharacterSheetProps {
   character: Character;
@@ -30,6 +31,9 @@ export function CharacterSheet({ character, onSave, isNew = false }: CharacterSh
   const [newQuality, setNewQuality] = useState('');
   const [newChallenge, setNewChallenge] = useState('');
   const [newEquipment, setNewEquipment] = useState({ name: '', description: '' });
+
+  // Sistema de pontos
+  const { config, calculation, updateConfig } = usePointsSystem(editedCharacter);
 
   const updateCharacter = useCallback((updates: Partial<Character>) => {
     setEditedCharacter(prev => {
@@ -185,6 +189,18 @@ export function CharacterSheet({ character, onSave, isNew = false }: CharacterSh
 
   return (
     <div className="space-y-6">
+      {/* Points Counter - Fixed at top (only when editing) */}
+      {isEditing && (
+        <PointsCounter
+          totalPoints={config.totalPoints}
+          calculation={calculation}
+          isEnabled={config.enabled}
+          onUpdateSettings={({ enabled, totalPoints }) => {
+            updateConfig({ enabled, totalPoints });
+          }}
+        />
+      )}
+
       {/* Header with Name and Controls */}
       <ComicCard variant="primary" rotate={-1} shadowSize="lg" className="relative overflow-visible">
         <div className="flex flex-col md:flex-row md:items-start gap-4">

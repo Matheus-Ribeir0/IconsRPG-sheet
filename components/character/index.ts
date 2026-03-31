@@ -6,3 +6,4 @@ export { SpecialtyChip } from './specialty-chip';
 export { CharacterCard } from './character-card';
 export { ConditionsList } from './conditions-list';
 export { ImageUpload } from './image-upload';
+export { PointsCounter } from './points-counter';
