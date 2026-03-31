@@ -103,6 +103,13 @@ export default function CharacterPage({ params }: PageProps) {
           />
         )}
       </main>
+       <footer className="relative border-t-4 border-foreground bg-card mt-12">
+        <div className="container mx-auto px-4 py-6 text-center">
+          <p className="text-sm text-muted-foreground">
+            Criado para o sistema <strong>Icons: Assembled Edition</strong> por <a href="https://github.com/Matheus-Ribeir0" className="text-primary hover:underline"><i>Matheus Ribeiro</i></a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -117,7 +117,7 @@ export function VitalBadge({
             {/* Value Text */}
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="font-black text-lg text-foreground drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
-                {current} / {max}
+                {current === 0 ? 'K/O' : `${current} / ${max}`}
               </span>
             </div>
           </div>
@@ -219,8 +219,8 @@ export function VitalBadge({
             )}
           >
             <div className="text-center">
-              <span className="text-3xl font-black">{current}</span>
-              <span className="text-sm font-bold">/{max}</span>
+              <span className="text-3xl font-black">{current === 0 ? 'K/O' : current}</span>
+              {current !== 0 && <span className="text-sm font-bold">/{max}</span>}
             </div>
             
             {/* Shine effect */}
