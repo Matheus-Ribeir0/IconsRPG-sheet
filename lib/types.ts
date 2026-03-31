@@ -83,6 +83,7 @@ export interface Power {
   name: string;
   level: number;
   description: string;
+  type: string;
   extras: string[];
   limits: string[];
 }

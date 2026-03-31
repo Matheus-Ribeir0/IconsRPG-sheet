@@ -11,6 +11,7 @@ import {
 } from '@/lib/types';
 import { ComicCard, ComicHeading, ComicButton } from '@/components/comic';
 import { AttributeCard, VitalBadge, PowerCard, SpecialtyChip, ConditionsList, ImageUpload, PointsCounter } from '@/components/character';
+import { PowerSelector } from '@/components/character/power-selector';
 import {
   Shield, Zap, Star, Package, BookOpen,
   StickyNote, Plus, Save, X, Edit3, Check,
@@ -31,9 +32,10 @@ export function CharacterSheet({ character, onSave, isNew = false }: CharacterSh
   const [newQuality, setNewQuality] = useState('');
   const [newChallenge, setNewChallenge] = useState('');
   const [newEquipment, setNewEquipment] = useState({ name: '', description: '' });
+  const [isPowerSelectorOpen, setIsPowerSelectorOpen] = useState(false);
 
   // Sistema de pontos
-  const { config, calculation, updateConfig } = usePointsSystem(editedCharacter);
+  const { config, calculation, updateConfig, canSpend } = usePointsSystem(editedCharacter);
 
   const updateCharacter = useCallback((updates: Partial<Character>) => {
     setEditedCharacter(prev => {
@@ -70,14 +72,10 @@ export function CharacterSheet({ character, onSave, isNew = false }: CharacterSh
   };
 
   const addPower = () => {
-    const newPower: Power = {
-      id: crypto.randomUUID(),
-      name: 'Novo Poder',
-      level: 5,
-      description: '',
-      extras: [],
-      limits: [],
-    };
+    setIsPowerSelectorOpen(true);
+  };
+
+  const handleSelectPower = (newPower: Power) => {
     updateCharacter({ powers: [...editedCharacter.powers, newPower] });
   };
 
@@ -734,6 +732,13 @@ export function CharacterSheet({ character, onSave, isNew = false }: CharacterSh
           )}
         </div>
       )}
+
+      {/* Power Selector Modal */}
+      <PowerSelector
+        isOpen={isPowerSelectorOpen}
+        onClose={() => setIsPowerSelectorOpen(false)}
+        onSelectPower={handleSelectPower}
+      />
     </div>
   );
 }

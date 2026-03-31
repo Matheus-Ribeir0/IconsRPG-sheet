@@ -136,7 +136,7 @@ export const POWERS_DATABASE: PowerDefinition[] = [
     categoria: 'Alteracao',
   },
   {
-    nome: 'Imitar Poder',
+    nome: 'Imitar Power',
     descricao: 'Copiar poderes de outros.',
     mecanica: 'Pode usar um poder de outro personagem ate o nivel do poder.',
     categoria: 'Alteracao',
@@ -471,7 +471,7 @@ export const POWERS_DATABASE: PowerDefinition[] = [
     categoria: 'Ofensivo',
   },
   {
-    nome: 'Debilitar',
+    nome: 'Embotar (Dazzle)',
     descricao: 'Sobrepujar um sentido (luz ofuscante, som, etc).',
     mecanica: 'Teste Coordenacao vs Coordenacao a longo alcance.',
     niveis_de_sucesso: {

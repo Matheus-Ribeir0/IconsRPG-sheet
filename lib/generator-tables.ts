@@ -162,6 +162,7 @@ export function generateRandomPowers(count: number = 3): Power[] {
     name: power.name,
     level: ATTRIBUTE_TABLE[roll2d6()],
     description: `Poder de ${power.category}`,
+    type: power.category,
     extras: [],
     limits: [],
   }));
